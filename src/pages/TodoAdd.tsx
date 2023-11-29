@@ -1,4 +1,4 @@
-import { IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import { add, chevronUpCircle, colorPalette, globe } from 'ionicons/icons';
@@ -8,7 +8,10 @@ const TodoAdd: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Add Task</IonTitle>
+        <IonButtons slot="start">
+          <IonBackButton defaultHref="#"></IonBackButton>
+        </IonButtons>
+        <IonTitle>Back</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
