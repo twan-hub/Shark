@@ -1,3 +1,5 @@
+// App.tsx
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -10,11 +12,13 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { albumsSharp, ellipse, list, square, star, triangle } from 'ionicons/icons';
+import { albumsSharp, list, star } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import TodoAdd from './pages/TodoAdd'; // Import TodoAdd component
 
+// ... (CSS and setupIonicReact)
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -46,6 +50,10 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/tab2">
             <Tab2 />
+          </Route>
+          {/* Route for TodoAdd component */}
+          <Route path="/tab2/todoadd">
+            <TodoAdd />
           </Route>
           <Route path="/tab3">
             <Tab3 />
