@@ -1,4 +1,5 @@
-.center-title{
+.form-buttons{
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
+    padding-top: 20px;
 }

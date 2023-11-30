@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonInput, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonFabList, IonHeader, IonIcon, IonInput, IonItem, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './TodoAdd.css';
 import { add, chevronUpCircle, colorPalette, globe } from 'ionicons/icons';
@@ -12,26 +12,33 @@ const TodoAdd: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <div>
-          <IonInput label="New Task" labelPlacement="floating" maxlength={20}></IonInput>
+        <form className='ion-padding'>
+          <IonItem>
+            <IonInput
+              label="New Task"
+              labelPlacement="floating"
+              maxlength={20}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonInput
+              label="Additional Detail (Optional) "
+              labelPlacement="floating"
+              maxlength={20}
+              counterFormatter={(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`}
+            ></IonInput>
+          </IonItem>
+          <div className='form-buttons'>
+            <IonButtons>
+              <IonButton fill="clear" href="tab2">Back</IonButton>
+            </IonButtons>
 
-        <IonInput
-          label="Additional Detail (Optional) "
-          labelPlacement="floating"
-          maxlength={20}
-          counterFormatter={(inputLength, maxLength) => `${maxLength - inputLength} characters remaining`}
-        ></IonInput>
-        </div>
-        
-        <div>
-          <IonButtons>
-            <IonButton fill="clear" href="#">Back</IonButton>
-          </IonButtons>
+            <IonButtons>
+              <IonButton fill="clear" href="tab2">Save</IonButton>
+            </IonButtons>
+          </div>
+        </form>
 
-          <IonButtons>
-            <IonButton fill="clear" href="tab2">Save</IonButton>
-          </IonButtons>
-        </div>
 
       </IonContent>
     </IonPage>
