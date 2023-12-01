@@ -4,6 +4,7 @@ import { IonAccordion, IonAccordionGroup, IonAvatar, IonButton, IonContent, IonF
 import { add, caretDownCircle, chevronForwardOutline, ellipseOutline, pin, share, trash } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 import "./Tab2.css"
+import Task from '../components/Task';
 const Tab2: React.FC = () => {
   const history = useHistory();
 
@@ -11,6 +12,7 @@ const Tab2: React.FC = () => {
     history.push("/tab2/todoadd");
   }
 
+  const name = "names";
   return (
     <IonPage>
       <IonHeader>
@@ -25,21 +27,8 @@ const Tab2: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <IonList inset={true}>
-          <IonItemSliding>
-            <IonItem button={true}>
-              <IonIcon icon={ellipseOutline} style={{
-                paddingRight:10
-              }}/>
-              <IonLabel>Rick Astley</IonLabel>
-              <IonIcon icon={chevronForwardOutline}/>
-            </IonItem>
-            <IonItemOptions slot="end">
-              <IonItemOption color="danger" expandable={true}>
-                <IonIcon slot="icon-only" icon={trash}></IonIcon>
-              </IonItemOption>
-            </IonItemOptions>
-          </IonItemSliding>
-          </IonList>
+          <Task name={name} />
+        </IonList>
         <IonFab slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton onClick={handleAddButtonClick}>
             <IonIcon icon={add} />
