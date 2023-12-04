@@ -32,7 +32,7 @@ const TodoAdd: React.FC = () => {
   };
 
   const validateForm = (newTask: string, newDetails: string) => {
-    if (newTask.trim() !== '' && newDetails.trim() !== '') {
+    if (newTask.trim() !== '') {
       setFormValid(true);
     } else {
       setFormValid(false);

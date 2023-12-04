@@ -37,6 +37,8 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import TaskInfo from './pages/TaskForm';
+import TaskForm from './pages/TaskForm';
 
 setupIonicReact();
 
@@ -55,6 +57,10 @@ const App: React.FC = () => (
           <Route path="/tab2/todoadd">
             <TodoAdd />
           </Route>
+          {/* Route for TaskInfo component */}
+          <Route path="/tab2/taskinfo/:name">
+            <TaskForm />
+          </Route>
           <Route path="/tab3">
             <Tab3 />
           </Route>
@@ -64,15 +70,15 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon aria-hidden="true" icon={star} />
-            <IonLabel>Favoite</IonLabel>
+            <IonIcon icon={star} />
+            <IonLabel>Favorite</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon aria-hidden="true" icon={list} />
+            <IonIcon icon={list} />
             <IonLabel>To-Do</IonLabel>
           </IonTabButton>
           <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon aria-hidden="true" icon={albumsSharp} />
+            <IonIcon icon={albumsSharp} />
             <IonLabel>List</IonLabel>
           </IonTabButton>
         </IonTabBar>
