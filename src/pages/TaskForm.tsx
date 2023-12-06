@@ -69,12 +69,6 @@ const TaskForm: React.FC = () => {
                         <IonTextarea onIonChange={handleDetailChange} label="Task Details :" label-placement="floating" rows={5}></IonTextarea>
                     </IonItem>
                     <div className="form-buttons">
-                        <IonButtons slot="start">
-                            <IonButton fill="clear" href="tab2">
-                                Back
-                            </IonButton>
-                        </IonButtons>
-
                         <IonButtons slot="end">
                             <IonButton
                                 type="submit"

@@ -3,7 +3,10 @@ import {
   IonButton,
   IonButtons,
   IonContent,
+  IonFab,
+  IonFabButton,
   IonHeader,
+  IonIcon,
   IonInput,
   IonItem,
   IonPage,
@@ -12,12 +15,18 @@ import {
 } from '@ionic/react';
 import './TodoAdd.css';
 import { useHistory } from 'react-router';
+import { chevronBack } from 'ionicons/icons';
 
 const TodoAdd: React.FC = () => {
   const [newTask, setNewTask] = useState<string>('');
   const [newDetails, setNewDetails] = useState<string>('');
   const [formValid, setFormValid] = useState<boolean>(false);
   const history = useHistory();
+
+  const handleBackButtonClick = () => {
+    history.goBack();
+  }
+
 
   const handleTaskChange = (e: CustomEvent) => {
     const value = (e.target as HTMLInputElement).value;
@@ -76,12 +85,6 @@ const TodoAdd: React.FC = () => {
             ></IonInput>
           </IonItem>
           <div className="form-buttons">
-            <IonButtons slot="start">
-              <IonButton fill="clear" href="tab2">
-                Back
-              </IonButton>
-            </IonButtons>
-
             <IonButtons slot="end">
               <IonButton
                 type="submit"
@@ -94,6 +97,11 @@ const TodoAdd: React.FC = () => {
             </IonButtons>
           </div>
         </form>
+        <IonFab slot="fixed" vertical="bottom" horizontal="end">
+          <IonFabButton onClick={handleBackButtonClick}>
+            <IonIcon icon={chevronBack} />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

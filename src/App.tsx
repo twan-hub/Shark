@@ -1,5 +1,5 @@
 // App.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -39,52 +39,75 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import TaskInfo from './pages/TaskForm';
 import TaskForm from './pages/TaskForm';
+import Login from './pages/Login';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
-          </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
-          </Route>
-          {/* Route for TodoAdd component */}
-          <Route path="/tab2/todoadd">
-            <TodoAdd />
-          </Route>
-          {/* Route for TaskInfo component */}
-          <Route path="/tab2/taskinfo/:name">
-            <TaskForm />
-          </Route>
-          <Route path="/tab3">
-            <Tab3 />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/tab1" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
-            <IonIcon icon={star} />
-            <IonLabel>Favorite</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
-            <IonIcon icon={list} />
-            <IonLabel>To-Do</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
-            <IonIcon icon={albumsSharp} />
-            <IonLabel>List</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const [loginToggle,setLoginToggle]=useState(false);
+
+  const handleLogin = () => {
+    // Simulate successful login for demonstration purposes
+    setLoginToggle(true);
+  };
+
+  const handleLogout = () => {
+    setLoginToggle(false);
+  };
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <Route exact path="/login">
+          <Login onLogin={handleLogin} />
+        </Route>
+        {loginToggle ? (
+          <IonTabs>
+            <IonRouterOutlet>
+            <Route exact path="/login">
+                <Redirect to="/tab2" />
+              </Route>
+              <Route exact path="/tab1">
+                <Tab1 />
+              </Route>
+              <Route exact path="/tab2">
+                <Tab2 />
+              </Route>
+              {/* Route for TodoAdd component */}
+              <Route path="/tab2/todoadd">
+                <TodoAdd />
+              </Route>
+              {/* Route for TaskInfo component */}
+              <Route path="/tab2/taskinfo/:name">
+                <TaskForm />
+              </Route>
+              <Route path="/tab3">
+                <Tab3 />
+              </Route>
+              <Route exact path="/">
+                <Redirect to="/tab1" />
+              </Route>
+            </IonRouterOutlet>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="tab1" href="/tab1">
+                <IonIcon icon={star} />
+                <IonLabel>Favorite</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab2" href="/tab2">
+                <IonIcon icon={list} />
+                <IonLabel>To-Do</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab3" href="/tab3">
+                <IonIcon icon={albumsSharp} />
+                <IonLabel>List</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
+        ) : (
+          <Redirect to="/login" />
+        )}
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
