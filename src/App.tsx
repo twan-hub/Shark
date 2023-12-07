@@ -40,6 +40,7 @@ import './theme/variables.css';
 import TaskInfo from './pages/TaskForm';
 import TaskForm from './pages/TaskForm';
 import Login from './pages/Login';
+import TaskView from './pages/TaskView';
 
 setupIonicReact();
 
@@ -79,6 +80,9 @@ const App: React.FC = () => {
               {/* Route for TaskInfo component */}
               <Route path="/tab2/taskinfo/:name">
                 <TaskForm />
+              </Route>
+              <Route path="/tab2/view/:name">
+                <TaskView />
               </Route>
               <Route path="/tab3">
                 <Tab3 />

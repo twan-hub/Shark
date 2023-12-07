@@ -16,6 +16,10 @@ const Task: React.FC<TaskProps> = ({ name }) => {
         // Redirect to TaskInfo page with the task name in the URL
         history.push(`/tab2/taskinfo/${name}`);
     };
+    const handleViewClick = () => {
+        // Redirect to TaskInfo page with the task name in the URL
+        history.push(`/tab2/view/${name}`);
+    };
 
     return (
         <IonItemSliding>
@@ -28,7 +32,7 @@ const Task: React.FC<TaskProps> = ({ name }) => {
                 <IonItemOption color="success" expandable={true}>
                     <IonIcon slot="icon-only" icon={checkmarkCircleOutline}></IonIcon>
                 </IonItemOption>
-                <IonItemOption color="primary" expandable={true}>
+                <IonItemOption  onClick={handleViewClick}color="primary" expandable={true}>
                     <IonIcon slot="icon-only" icon={eye}></IonIcon>
                 </IonItemOption>
                 <IonItemOption color="danger" expandable={true}>
