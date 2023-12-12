@@ -14,7 +14,7 @@ const Task: React.FC<TaskProps> = ({ name }) => {
 
     const handleTaskClick = () => {
         // Redirect to TaskInfo page with the task name in the URL
-        history.push(`/tab2/taskinfo/${name}`);
+        history.push(`/tab2/taskEdit/${name}`);
     };
     const handleViewClick = () => {
         // Redirect to TaskInfo page with the task name in the URL

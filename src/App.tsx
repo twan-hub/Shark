@@ -12,7 +12,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { albumsSharp, list, star } from 'ionicons/icons';
+import { albumsSharp, checkmarkCircle, checkmarkCircleOutline, list, star } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -78,7 +78,7 @@ const App: React.FC = () => {
                 <TodoAdd />
               </Route>
               {/* Route for TaskInfo component */}
-              <Route path="/tab2/taskinfo/:name">
+              <Route path="/tab2/taskEdit/:name">
                 <TaskForm />
               </Route>
               <Route path="/tab2/view/:name">
@@ -101,8 +101,8 @@ const App: React.FC = () => {
                 <IonLabel>To-Do</IonLabel>
               </IonTabButton>
               <IonTabButton tab="tab3" href="/tab3">
-                <IonIcon icon={albumsSharp} />
-                <IonLabel>List</IonLabel>
+                <IonIcon icon={checkmarkCircleOutline} />
+                <IonLabel>Completed</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>

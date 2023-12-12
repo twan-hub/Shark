@@ -12,7 +12,7 @@ const TaskView: React.FC = () => {
     const [taskDetails, setTaskDetails] = useState("");
 
     const handleEditButtonClick = () => {
-        history.push(`/tab2/taskinfo/${name}`);
+        history.push(`/tab2/taskEdit/${name}`);
     }
 
     const [newTask, setNewTask] = useState<string>('');
@@ -43,7 +43,7 @@ const TaskView: React.FC = () => {
     const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
         console.log('New Task:', newTask);
         console.log('Task Details:', newDetails);
-        history.push("/tab2/todoadd");
+        history.push(`/tab2/taskEdit/`);
     };
 
 
