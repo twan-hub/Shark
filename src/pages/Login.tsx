@@ -47,7 +47,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     // Perform authentication logic here
     if (formValid) {
-      onLogin(); // Call onLogin prop to indicate successful login
+      // Simulate successful login and obtain user token
+      const userToken = 'your_user_token_here';
+
+      // Save user token to localStorage
+      localStorage.setItem('userToken', userToken);
+
+      // Call onLogin prop to indicate successful login
+      onLogin(); 
     } else {
       console.log('Invalid email or password');
       // Show error message to the user or perform other actions for unsuccessful login
@@ -99,3 +106,4 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 };
 
 export default Login;
+

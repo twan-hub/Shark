@@ -1,17 +1,23 @@
-// Tab2.tsx
-
 import React from 'react';
-import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { add, ellipseOutline } from 'ionicons/icons';
+import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import { add, ellipseOutline, logOut } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 import Task from '../components/Task';
 
-const Tab2: React.FC = () => {
+interface Tab2Props {
+  onLogout: () => void; // Define onLogout prop
+}
+
+const Tab2: React.FC<Tab2Props> = ({ onLogout }) => {
   const history = useHistory();
 
   const handleAddButtonClick = () => {
     history.push("/tab2/todoadd");
   }
+
+  const handleLogoutClick = () => {
+    onLogout(); // Call onLogout function passed from App component
+  };
 
   const name = "Task Name";
 
@@ -19,6 +25,9 @@ const Tab2: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButton slot="start" onClick={handleLogoutClick}>
+            <IonIcon icon={logOut} />
+          </IonButton>
           <IonTitle className='ion-text-center'>To-Do List</IonTitle>
         </IonToolbar>
       </IonHeader>

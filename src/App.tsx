@@ -71,7 +71,7 @@ const App: React.FC = () => {
                 <Tab1 />
               </Route>
               <Route exact path="/tab2">
-                <Tab2 />
+                <Tab2 onLogout={handleLogout}/>
               </Route>
               {/* Route for TodoAdd component */}
               <Route path="/tab2/todoadd">
