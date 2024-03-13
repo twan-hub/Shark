@@ -1,5 +1,4 @@
-// App.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -12,11 +11,12 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { albumsSharp, checkmarkCircle, checkmarkCircleOutline, list, star } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
+import { list } from 'ionicons/icons';
 import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
 import TodoAdd from './pages/TodoAdd'; // Import TodoAdd component
+import Login from './pages/Login';
+import Registration from './pages/Registration';
+import axios from 'axios';
 
 // ... (CSS and setupIonicReact)
 /* Core CSS required for Ionic components to work properly */
@@ -39,75 +39,55 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import TaskInfo from './pages/TaskForm';
 import TaskForm from './pages/TaskForm';
-import Login from './pages/Login';
 import TaskView from './pages/TaskView';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [loginToggle,setLoginToggle]=useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState<number>();
 
-  const handleLogin = () => {
-    // Simulate successful login for demonstration purposes
-    setLoginToggle(true);
+  const handleLogin = (userId: number) => {
+    setIsLoggedIn(true);
+    setUserId(userId);
+  };
+
+  const handleRegister = (userId: number) => {
+    setIsLoggedIn(true);
+    setUserId(userId);
   };
 
   const handleLogout = () => {
-    setLoginToggle(false);
+    setIsLoggedIn(false);
   };
+
   return (
     <IonApp>
       <IonReactRouter>
-        <Route exact path="/login">
-          <Login onLogin={handleLogin} />
-        </Route>
-        {loginToggle ? (
+        {isLoggedIn ? (
           <IonTabs>
             <IonRouterOutlet>
-            <Route exact path="/login">
-                <Redirect to="/tab2" />
-              </Route>
-              <Route exact path="/tab1">
-                <Tab1 />
-              </Route>
               <Route exact path="/tab2">
-                <Tab2 onLogout={handleLogout}/>
-              </Route>
-              {/* Route for TodoAdd component */}
-              <Route path="/tab2/todoadd">
-                <TodoAdd />
-              </Route>
-              {/* Route for TaskInfo component */}
-              <Route path="/tab2/taskEdit/:name">
-                <TaskForm />
-              </Route>
-              <Route path="/tab2/view/:name">
-                <TaskView />
-              </Route>
-              <Route path="/tab3">
-                <Tab3 />
-              </Route>
-              <Route exact path="/">
-                <Redirect to="/tab1" />
+                <Tab2 userId={userId} onLogout={handleLogout} />
               </Route>
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
-              <IonTabButton tab="tab1" href="/tab1">
-                <IonIcon icon={star} />
-                <IonLabel>Favorite</IonLabel>
-              </IonTabButton>
               <IonTabButton tab="tab2" href="/tab2">
                 <IonIcon icon={list} />
                 <IonLabel>To-Do</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="tab3" href="/tab3">
-                <IonIcon icon={checkmarkCircleOutline} />
-                <IonLabel>Completed</IonLabel>
-              </IonTabButton>
             </IonTabBar>
           </IonTabs>
         ) : (
-          <Redirect to="/login" />
+          <>
+            <Route path="/login">
+              <Login onLogin={handleLogin} />
+            </Route>
+            <Route path="/register">
+              <Registration onRegister={handleRegister} />
+            </Route>
+            <Redirect to="/login" />
+          </>
         )}
       </IonReactRouter>
     </IonApp>

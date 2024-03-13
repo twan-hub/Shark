@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import Axios
 import {
   IonButton,
   IonButtons,
@@ -27,7 +28,6 @@ const TodoAdd: React.FC = () => {
     history.goBack();
   }
 
-
   const handleTaskChange = (e: CustomEvent) => {
     const value = (e.target as HTMLInputElement).value;
     setNewTask(value);
@@ -49,9 +49,19 @@ const TodoAdd: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('New Task:', newTask);
-    console.log('Task Details:', newDetails);
-    history.goBack();
+    e.preventDefault(); // Prevent the default form submission behavior
+    axios.post('http://localhost:8080/api/task/create', {
+      taskName: newTask,
+      taskDetails: newDetails,
+      favorite: false
+    })
+    .then(response => {
+      console.log('Task created successfully:', response.data);
+      history.goBack(); // Navigate back after successful creation
+    })
+    .catch(error => {
+      console.error('Error creating task:', error);
+    });
   };
 
   return (
@@ -89,7 +99,6 @@ const TodoAdd: React.FC = () => {
               <IonButton
                 type="submit"
                 fill="clear"
-                href="tab2"
                 disabled={!formValid}
               >
                 Save

@@ -3,46 +3,51 @@ import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage,
 import { useHistory } from 'react-router';
 import axios from 'axios';
 
-interface LoginProps {
-  onLogin: (userId: number) => void;
+interface RegistrationProps {
+  onRegister: (userId: number) => void;
 }
 
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [verifyPassword, setVerifyPassword] = useState('');
   const history = useHistory();
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (password !== verifyPassword) {
+      console.log('Passwords do not match');
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/login', { username, password });
+      const response = await axios.post('http://localhost:8080/api/auth/register', { username, password });
       if (response.status === 200) {
-        const userId = response.data; // Assuming userId is returned from the server
-        localStorage.setItem('sessionToken', response.data.sessionToken);
+        const userId = response.data.userId; // Assuming userId is returned from the server
         history.push("/tab2");
-        onLogin(userId);
+        onRegister(userId);
       } else {
-        console.log('Login failed:', response.statusText);
+        console.error('Registration failed');
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      console.error('Error during registration:', error);
     }
   };
 
-  const handleRegisterClick = () => {
-    history.push("/register");
+  const handleLoginClick = () => {
+    history.push("/login");
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Login</IonTitle>
+          <IonTitle>Registration</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleRegister}>
           <IonItem className='ion-padding' lines="full">
             <IonLabel position="stacked">Username</IonLabel>
             <IonInput
@@ -61,11 +66,20 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               required
             ></IonInput>
           </IonItem>
+          <IonItem className='ion-padding' lines="full">
+            <IonLabel position="stacked">Verify Password</IonLabel>
+            <IonInput
+              type="password"
+              value={verifyPassword}
+              onIonChange={(e) => setVerifyPassword(e.detail.value!)}
+              required
+            ></IonInput>
+          </IonItem>
           <div className='ion-padding'>
-            <IonButton type='submit' expand="full">Login</IonButton>
+            <IonButton type='submit' expand="full">Register</IonButton>
           </div>
           <div className='ion-padding'>
-            <IonButton expand="full" onClick={handleRegisterClick}>Register</IonButton>
+            <IonButton expand="full" onClick={handleLoginClick}>Login</IonButton>
           </div>
         </form>
       </IonContent>
@@ -73,4 +87,4 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   );
 };
 
-export default Login;
+export default Registration;
