@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -64,31 +64,34 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        {isLoggedIn ? (
-          <IonTabs>
-            <IonRouterOutlet>
+        <IonRouterOutlet>
+          {isLoggedIn ? (
+            <>
               <Route exact path="/tab2">
                 <Tab2 userId={userId} onLogout={handleLogout} />
               </Route>
-            </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="tab2" href="/tab2">
-                <IonIcon icon={list} />
-                <IonLabel>To-Do</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
-        ) : (
-          <>
-            <Route path="/login">
-              <Login onLogin={handleLogin} />
-            </Route>
-            <Route path="/register">
-              <Registration onRegister={handleRegister} />
-            </Route>
-            <Redirect to="/login" />
-          </>
-        )}
+              <Route exact path="/todo-add">
+                <TodoAdd userId={userId} />
+              </Route>
+              <Route path="/edit/:id">
+                <TaskForm userId={userId} />
+              </Route>
+              <Route path="/view/:id">
+                <TaskView userId={userId} />
+              </Route>
+            </>
+          ) : (
+            <>
+              <Route path="/login">
+                <Login onLogin={handleLogin} />
+              </Route>
+              <Route path="/register">
+                <Registration onRegister={handleRegister} />
+              </Route>
+              <Redirect to="/login" />
+            </>
+          )}
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );

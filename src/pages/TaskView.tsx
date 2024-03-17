@@ -1,75 +1,58 @@
-// Tab2.tsx
+// TaskView.tsx
 
-import React, { useState } from 'react';
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonNote, IonPage, IonTextarea, IonTitle, IonToggle, IonToolbar } from '@ionic/react';
-import { add, addCircleOutline, checkmarkCircleOutline, chevronBack, chevronForwardOutline, ellipseOutline, pencilOutline, trash } from 'ionicons/icons';
+import React, { useState, useEffect } from 'react';
+import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonPage, IonTextarea, IonTitle, IonToolbar, IonBackButton } from '@ionic/react';
+import { chevronBack, pencilOutline } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router';
-import Task from '../components/Task';
+import axios from 'axios';
 
-const TaskView: React.FC = () => {
+
+interface TaskViewProps {
+    userId?: number;
+}
+
+const TaskView: React.FC<TaskViewProps> = ({ userId }) => {
+    const { id } = useParams<{ id: string }>();
+    const [task, setTask] = useState<string>('');
+    const [taskDetails, setTaskDetails] = useState<string>('');
     const history = useHistory();
-    const { name } = useParams<{ name: string }>();
-    const [taskDetails, setTaskDetails] = useState("");
+
+    useEffect(() => {
+        fetchTaskDetails();
+    }, []);
+
+    const fetchTaskDetails = () => {
+        axios.get(`http://localhost:8080/api/task/${userId}/${id}`)
+            .then(response => {
+                const { taskName, taskDetails } = response.data;
+                setTask(taskName);
+                setTaskDetails(taskDetails);
+            })
+            .catch(error => {
+                console.error('Error fetching task details:', error);
+            });
+    };
 
     const handleEditButtonClick = () => {
-        history.push(`/tab2/taskEdit/${name}`);
+        history.push(`/edit/${id}`);
     }
-
-    const [newTask, setNewTask] = useState<string>('');
-    const [newDetails, setNewDetails] = useState<string>('');
-    const [formValid, setFormValid] = useState<boolean>(false);
-
-    const handleTaskChange = (e: CustomEvent) => {
-        const value = (e.target as HTMLInputElement).value;
-        setNewTask(value);
-        validateForm(value, newDetails);
-    };
-
-    const handleDetailChange = (e: CustomEvent) => {
-        const value = (e.target as HTMLInputElement).value;
-        setNewDetails(value);
-        validateForm(newTask, value);
-    };
-
-    const validateForm = (newTask: string, newDetails: string) => {
-        if (newTask.trim() !== '') {
-            setFormValid(true);
-        } else {
-            setFormValid(false);
-        }
-    };
-
-
-    const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('New Task:', newTask);
-        console.log('Task Details:', newDetails);
-        history.push(`/tab2/taskEdit/`);
-    };
-
-
-
 
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                <IonButtons slot="start">
-            <IonBackButton></IonBackButton>
-          </IonButtons>
-                    <IonTitle className='ion-text-center'>{name}</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/tab2" />
+                    </IonButtons>
+                    <IonTitle className='ion-text-center'>{task}</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">{name}</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
                 <IonItem>
-                    <IonInput color="primary" disabled={true} label="Task :" label-placement="floating" value={name} clearInput={true}></IonInput>
+                    <IonInput color="primary" disabled={true} value={task}></IonInput>
                 </IonItem>
                 <IonItem>
-                    <IonTextarea disabled={true} onIonChange={handleDetailChange} label="Task Details :" label-placement="floating" rows={5}>{taskDetails}</IonTextarea>
+                    <IonTextarea disabled={true} value={taskDetails} rows={5}></IonTextarea>
                 </IonItem>
                 <IonFab slot="fixed" vertical="bottom" horizontal="end">
                     <IonFabButton onClick={handleEditButtonClick}>

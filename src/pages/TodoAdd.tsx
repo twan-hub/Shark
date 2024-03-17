@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Import Axios
+import axios from 'axios';
 import {
   IonButton,
   IonButtons,
@@ -18,7 +18,11 @@ import './TodoAdd.css';
 import { useHistory } from 'react-router';
 import { chevronBack } from 'ionicons/icons';
 
-const TodoAdd: React.FC = () => {
+interface TodoAddProps {
+  userId?: number;
+}
+
+const TodoAdd: React.FC<TodoAddProps> = ({ userId }) => {
   const [newTask, setNewTask] = useState<string>('');
   const [newDetails, setNewDetails] = useState<string>('');
   const [formValid, setFormValid] = useState<boolean>(false);
@@ -49,15 +53,14 @@ const TodoAdd: React.FC = () => {
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    axios.post('http://localhost:8080/api/task/create', {
+    e.preventDefault();
+    axios.post(`http://localhost:8080/api/task/${userId}/create`, {
       taskName: newTask,
-      taskDetails: newDetails,
-      favorite: false
+      taskDetails: newDetails
     })
     .then(response => {
       console.log('Task created successfully:', response.data);
-      history.goBack(); // Navigate back after successful creation
+      history.goBack();
     })
     .catch(error => {
       console.error('Error creating task:', error);
@@ -68,6 +71,11 @@ const TodoAdd: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={handleBackButtonClick}>
+              <IonIcon icon={chevronBack} />
+            </IonButton>
+          </IonButtons>
           <IonTitle className="ion-text-center"> New Task </IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -106,11 +114,6 @@ const TodoAdd: React.FC = () => {
             </IonButtons>
           </div>
         </form>
-        <IonFab slot="fixed" vertical="bottom" horizontal="end">
-          <IonFabButton onClick={handleBackButtonClick}>
-            <IonIcon icon={chevronBack} />
-          </IonFabButton>
-        </IonFab>
       </IonContent>
     </IonPage>
   );
