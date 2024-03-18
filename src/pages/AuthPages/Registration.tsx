@@ -25,7 +25,7 @@ const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
       const response = await axios.post('http://localhost:8080/api/auth/register', { username, password });
       if (response.status === 200) {
         const userId = response.data.userId; // Assuming userId is returned from the server
-        history.push("/tab2");
+        history.push("/home");
         onRegister(userId);
       } else {
         console.error('Registration failed');

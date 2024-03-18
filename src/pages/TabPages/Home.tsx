@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 import { add, logOut } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router';
-import Task from '../components/Task';
+import Task from '../../components/Task/Task';
 import axios from 'axios';
 
 interface Task {
@@ -13,18 +13,18 @@ interface Task {
   favorite: boolean;
 }
 
-interface Tab2Props {
+interface HomeProps {
   userId?: number;
   onLogout: () => void; // Callback function for logout
 }
 
-const Tab2: React.FC<Tab2Props> = ({ userId, onLogout }) => {
+const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
   const history = useHistory();
   const location = useLocation();
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    if (location.pathname === '/tab2') {
+    if (location.pathname === '/home') {
       fetchTasks();
     }
   }, [location.pathname]);
@@ -52,7 +52,7 @@ const Tab2: React.FC<Tab2Props> = ({ userId, onLogout }) => {
   };
 
   const handleAddButtonClick = () => {
-    history.push("/todo-add");
+    history.push("/home");
   };
 
   const handleLogout = () => {
@@ -103,4 +103,4 @@ const Tab2: React.FC<Tab2Props> = ({ userId, onLogout }) => {
   );
 };
 
-export default Tab2;
+export default Home;

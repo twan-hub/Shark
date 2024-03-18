@@ -14,15 +14,15 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import './TodoAdd.css';
+import '../../styles/TaskAdd.css';
 import { useHistory } from 'react-router';
 import { chevronBack } from 'ionicons/icons';
 
-interface TodoAddProps {
+interface TaskAddProps {
   userId?: number;
 }
 
-const TodoAdd: React.FC<TodoAddProps> = ({ userId }) => {
+const TaskAdd: React.FC<TaskAddProps> = ({ userId }) => {
   const [newTask, setNewTask] = useState<string>('');
   const [newDetails, setNewDetails] = useState<string>('');
   const [formValid, setFormValid] = useState<boolean>(false);
@@ -119,4 +119,4 @@ const TodoAdd: React.FC<TodoAddProps> = ({ userId }) => {
   );
 };
 
-export default TodoAdd;
+export default TaskAdd;

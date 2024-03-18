@@ -42,7 +42,7 @@ const TaskView: React.FC<TaskViewProps> = ({ userId }) => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/tab2" />
+                        <IonBackButton defaultHref="home" />
                     </IonButtons>
                     <IonTitle className='ion-text-center'>{task}</IonTitle>
                 </IonToolbar>

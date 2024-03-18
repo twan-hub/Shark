@@ -1,7 +1,7 @@
 // Task.tsx
 import React from 'react';
 import { IonIcon, IonItem, IonItemOptions, IonItemOption, IonItemSliding, IonLabel } from '@ionic/react';
-import { ellipseOutline, chevronForwardOutline, checkmarkCircleOutline, trash, eye } from 'ionicons/icons';
+import { ellipseOutline, chevronForwardOutline, checkmarkCircleOutline, trash, eye, add, removeCircleOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 
 interface TaskProps {
@@ -36,7 +36,7 @@ const Task: React.FC<TaskProps> = ({ id, name, onDelete }) => {
             </IonItem>
             <IonItemOptions slot="end">
                 <IonItemOption color="success" expandable={true}>
-                    <IonIcon slot="icon-only" icon={checkmarkCircleOutline}></IonIcon>
+                    <IonIcon slot="icon-only" icon={removeCircleOutline}></IonIcon>
                 </IonItemOption>
                 <IonItemOption onClick={handleViewClick} color="primary" expandable={true}>
                     <IonIcon slot="icon-only" icon={eye}></IonIcon>
@@ -48,5 +48,3 @@ const Task: React.FC<TaskProps> = ({ id, name, onDelete }) => {
         </IonItemSliding>
     );
 };
-
-export default Task;

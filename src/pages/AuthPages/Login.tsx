@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { useHistory } from 'react-router';
-import axios from 'axios';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton } from "@ionic/react";
+import axios from "axios";
+import { useState } from "react";
+import { useHistory } from "react-router";
 
 interface LoginProps {
   onLogin: (userId: number) => void;
@@ -20,7 +20,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       if (response.status === 200) {
         const userId = response.data; // Assuming userId is returned from the server
         localStorage.setItem('sessionToken', response.data.sessionToken);
-        history.push("/tab2");
+        history.push("/home");
         onLogin(userId);
       } else {
         console.log('Login failed:', response.statusText);

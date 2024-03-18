@@ -4,11 +4,11 @@ import { chevronBack } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
 
-interface TaskFormProps {
+interface TaskUpdateProps {
     userId?: number;
 }
 
-const TaskForm: React.FC<TaskFormProps> = ({ userId }) => {
+const TaskUpdate: React.FC<TaskUpdateProps> = ({ userId }) => {
     const history = useHistory();
     const { id } = useParams<{ id: string }>();
 
@@ -91,4 +91,4 @@ const TaskForm: React.FC<TaskFormProps> = ({ userId }) => {
     );
 };
 
-export default TaskForm;
+export default TaskUpdate;

@@ -11,11 +11,6 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { list } from 'ionicons/icons';
-import Tab2 from './pages/Tab2';
-import TodoAdd from './pages/TodoAdd'; // Import TodoAdd component
-import Login from './pages/Login';
-import Registration from './pages/Registration';
 import axios from 'axios';
 
 // ... (CSS and setupIonicReact)
@@ -37,9 +32,12 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import TaskInfo from './pages/TaskForm';
-import TaskForm from './pages/TaskForm';
-import TaskView from './pages/TaskView';
+import Home from './pages/TabPages/Home';
+import TaskAdd from './pages/TaskPages/TaskAdd';
+import TaskUpdate from './pages/TaskPages/TaskUpdate';
+import Login from './pages/AuthPages/Login';
+import Registration from './pages/AuthPages/Registration';
+import TaskView from './pages/TaskPages/TaskView';
 
 setupIonicReact();
 
@@ -67,14 +65,14 @@ const App: React.FC = () => {
         <IonRouterOutlet>
           {isLoggedIn ? (
             <>
-              <Route exact path="/tab2">
-                <Tab2 userId={userId} onLogout={handleLogout} />
+              <Route exact path="/home">
+                <Home userId={userId} onLogout={handleLogout} />
               </Route>
-              <Route exact path="/todo-add">
-                <TodoAdd userId={userId} />
+              <Route exact path="/add">
+                <TaskAdd userId={userId} />
               </Route>
               <Route path="/edit/:id">
-                <TaskForm userId={userId} />
+                <TaskUpdate userId={userId} />
               </Route>
               <Route path="/view/:id">
                 <TaskView userId={userId} />
