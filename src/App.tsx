@@ -39,7 +39,8 @@ import TaskUpdate from './pages/TaskPages/TaskUpdate';
 import Login from './pages/AuthPages/Login';
 import Registration from './pages/AuthPages/Registration';
 import TaskView from './pages/TaskPages/TaskView';
-import PriorityHome from './pages/PriorityPage/PriorityHome';
+import PriorityHome from './pages/TabPages/PriorityHome';
+import DrinksPage from './pages/TabPages/DrinksPage';
 
 setupIonicReact();
 
@@ -83,22 +84,25 @@ const App: React.FC = () => {
                 <Route path="/priority">
                   <PriorityHome userId={userId} onLogout={handleLogout} />
                 </Route>
-              </IonRouterOutlet> 
+                <Route path="/drinks">
+                  <DrinksPage />
+                </Route>
+              </IonRouterOutlet>
               <IonTabBar slot="bottom">
-              <IonTabButton tab="priority" href="/priority">
-                <IonIcon icon={arrowUpCircleOutline} />
-                <IonLabel>Priority</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="home" href="/home">
-                <IonIcon icon={list} />
-                <IonLabel>To-Do</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="drinks" href="/drinks">
-                <IonIcon icon={beerOutline} />
-                <IonLabel>Drinks</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-          </IonTabs>
+                <IonTabButton tab="priority" href="/priority">
+                  <IonIcon icon={arrowUpCircleOutline} />
+                  <IonLabel>Priority</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="home" href="/home">
+                  <IonIcon icon={list} />
+                  <IonLabel>To-Do</IonLabel>
+                </IonTabButton>
+                <IonTabButton tab="drinks" href="/drinks">
+                  <IonIcon icon={beerOutline} />
+                  <IonLabel>Drinks</IonLabel>
+                </IonTabButton>
+              </IonTabBar>
+            </IonTabs>
           ) : (
             <>
               <Route path="/login">
