@@ -5,6 +5,7 @@ import { add, logOut, star } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router';
 import Task from '../../components/Task/Task';
 import axios from 'axios';
+import RemoveTask from '../../components/Task/RemoveTask';
 
 interface Task {
   id: number;
@@ -25,13 +26,13 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    if (location.pathname === '/home') {
+    if (location.pathname === '/priority') {
       fetchTasks();
     }
   }, [location.pathname]);
 
   const fetchTasks = () => {
-    fetch(`http://localhost:8080/api/task/${userId}/all`, {
+    fetch(`http://localhost:8080/api/favorite/${userId}/all`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
 
   const handleAddPriority = (id: number) => {
     // Make the API call to add priority
-    axios.post(`http://localhost:8080/api/favorite/${userId}/${id}`)
+    axios.delete(`http://localhost:8080/api/favorite/${userId}/${id}`)
         .then(response => {
             console.log('Priority added successfully:', response.data);
             // Update the task list after adding priority
@@ -105,7 +106,7 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
           </IonToolbar>
         </IonHeader>
         {tasks.map((task) => (
-          <Task key={task.id} id={task.id} name={task.taskName} onDelete={handleDeleteTask} onAddPriority={handleAddPriority}/>
+          <RemoveTask key={task.id} id={task.id} name={task.taskName} onDelete={handleDeleteTask} onAddPriority={handleAddPriority}/>
         ))}
         <IonFab slot="fixed" vertical="bottom" horizontal="end">
           <IonFabButton onClick={handleAddButtonClick}>

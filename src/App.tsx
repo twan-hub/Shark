@@ -12,6 +12,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import axios from 'axios';
+import { list, arrowUpCircleOutline, beerOutline } from 'ionicons/icons';
 
 // ... (CSS and setupIonicReact)
 /* Core CSS required for Ionic components to work properly */
@@ -38,6 +39,7 @@ import TaskUpdate from './pages/TaskPages/TaskUpdate';
 import Login from './pages/AuthPages/Login';
 import Registration from './pages/AuthPages/Registration';
 import TaskView from './pages/TaskPages/TaskView';
+import PriorityHome from './pages/PriorityPage/PriorityHome';
 
 setupIonicReact();
 
@@ -62,22 +64,41 @@ const App: React.FC = () => {
   return (
     <IonApp>
       <IonReactRouter>
-        <IonRouterOutlet>
+        <IonRouterOutlet onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
           {isLoggedIn ? (
-            <>
-              <Route exact path="/home">
-                <Home userId={userId} onLogout={handleLogout} />
-              </Route>
-              <Route exact path="/add">
-                <TaskAdd userId={userId} />
-              </Route>
-              <Route path="/edit/:id">
-                <TaskUpdate userId={userId} />
-              </Route>
-              <Route path="/view/:id">
-                <TaskView userId={userId} />
-              </Route>
-            </>
+            <IonTabs>
+              <IonRouterOutlet onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>
+                <Route exact path="/home">
+                  <Home userId={userId} onLogout={handleLogout} />
+                </Route>
+                <Route exact path="/add">
+                  <TaskAdd userId={userId} />
+                </Route>
+                <Route path="/edit/:id">
+                  <TaskUpdate userId={userId} />
+                </Route>
+                <Route path="/view/:id">
+                  <TaskView userId={userId} />
+                </Route>
+                <Route path="/priority">
+                  <PriorityHome userId={userId} onLogout={handleLogout} />
+                </Route>
+              </IonRouterOutlet> 
+              <IonTabBar slot="bottom">
+              <IonTabButton tab="priority" href="/priority">
+                <IonIcon icon={arrowUpCircleOutline} />
+                <IonLabel>Priority</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="home" href="/home">
+                <IonIcon icon={list} />
+                <IonLabel>To-Do</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="drinks" href="/drinks">
+                <IonIcon icon={beerOutline} />
+                <IonLabel>Drinks</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
+          </IonTabs>
           ) : (
             <>
               <Route path="/login">

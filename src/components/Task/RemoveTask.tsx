@@ -1,16 +1,17 @@
 // Task.tsx
 import React from 'react';
 import { IonIcon, IonItem, IonItemOptions, IonItemOption, IonItemSliding, IonLabel } from '@ionic/react';
-import { ellipseOutline, chevronForwardOutline, checkmarkCircleOutline, trash, eye, add, removeCircleOutline } from 'ionicons/icons';
+import { ellipseOutline, chevronForwardOutline, trash, eye, removeCircleOutline} from 'ionicons/icons';
 import { useHistory } from 'react-router';
 
-interface TaskProps {
+interface RemoveProps {
     id: number;
     name: string;
     onDelete: (id: number) => void; // Callback function to handle delete
+    onAddPriority: (id: number) => void; // Callback function to add priority
 }
 
-const Task: React.FC<TaskProps> = ({ id, name, onDelete }) => {
+const RemoveTask: React.FC<RemoveProps> = ({ id, name, onDelete, onAddPriority }) => {
     const history = useHistory();
 
     const handleTaskClick = () => {
@@ -27,6 +28,10 @@ const Task: React.FC<TaskProps> = ({ id, name, onDelete }) => {
         onDelete(id); // Notify parent component that task is deleted
     };
 
+    const handleRemovePriorityClick = () => {
+        onAddPriority(id); // Notify parent component to add priority
+    };
+
     return (
         <IonItemSliding>
             <IonItem button={true} onClick={handleTaskClick} className='task-align'>
@@ -35,7 +40,7 @@ const Task: React.FC<TaskProps> = ({ id, name, onDelete }) => {
                 <IonIcon icon={chevronForwardOutline} />
             </IonItem>
             <IonItemOptions slot="end">
-                <IonItemOption color="success" expandable={true}>
+                <IonItemOption color="success" expandable={true} onClick={handleRemovePriorityClick}>
                     <IonIcon slot="icon-only" icon={removeCircleOutline}></IonIcon>
                 </IonItemOption>
                 <IonItemOption onClick={handleViewClick} color="primary" expandable={true}>
@@ -48,3 +53,5 @@ const Task: React.FC<TaskProps> = ({ id, name, onDelete }) => {
         </IonItemSliding>
     );
 };
+
+export default RemoveTask;
