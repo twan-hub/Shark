@@ -41,6 +41,8 @@ import Registration from './pages/AuthPages/Registration';
 import TaskView from './pages/TaskPages/TaskView';
 import PriorityHome from './pages/TabPages/PriorityHome';
 import DrinksPage from './pages/TabPages/DrinksPage';
+import ViewRecipes from './pages/DrinksPages/ViewRecipes';
+import ViewRecipe from './pages/DrinksPages/ViewDrinks';
 
 setupIonicReact();
 
@@ -85,7 +87,13 @@ const App: React.FC = () => {
                   <PriorityHome userId={userId} onLogout={handleLogout} />
                 </Route>
                 <Route path="/drinks">
-                  <DrinksPage />
+                  <DrinksPage onLogout={handleLogout}/>
+                </Route>
+                <Route path="/recipes/:name">
+                  <ViewRecipes />
+                </Route>
+                <Route path="/recipe/:name">
+                  <ViewRecipe />
                 </Route>
               </IonRouterOutlet>
               <IonTabBar slot="bottom">

@@ -13,6 +13,7 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  IonToast,
 } from '@ionic/react';
 import '../../styles/TaskAdd.css';
 import { useHistory } from 'react-router';
@@ -54,6 +55,7 @@ const TaskAdd: React.FC<TaskAddProps> = ({ userId }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    
     axios.post(`http://localhost:8080/api/task/${userId}/create`, {
       taskName: newTask,
       taskDetails: newDetails

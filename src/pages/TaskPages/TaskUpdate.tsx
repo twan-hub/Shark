@@ -14,11 +14,16 @@ const TaskUpdate: React.FC<TaskUpdateProps> = ({ userId }) => {
 
     const [task, setTask] = useState<string>('');
     const [details, setDetails] = useState<string>('');
+    const [formValid, setFormValid] = useState<boolean>(false);
 
     useEffect(() => {
         console.log('IS:', id);
         fetchTaskDetails();
     }, []);
+
+    useEffect(() => {
+        validateForm(task, details);
+    }, [task, details]);
 
     const fetchTaskDetails = () => {
         axios.get(`http://localhost:8080/api/task/${userId}/${id}`)
@@ -47,8 +52,16 @@ const TaskUpdate: React.FC<TaskUpdateProps> = ({ userId }) => {
         setDetails(value);
     };
 
+    const validateForm = (task: string, details: string) => {
+        setFormValid(task.trim() !== '');
+    };
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (!task.trim()) {
+            console.error('Task name is required');
+            return;
+        }
         const updatedTask = {
             taskName: task,
             taskDetails: details
@@ -79,12 +92,22 @@ const TaskUpdate: React.FC<TaskUpdateProps> = ({ userId }) => {
             <IonContent fullscreen>
                 <form onSubmit={handleSubmit} className="ion-padding">
                     <IonItem>
-                        <IonInput value={task} placeholder="Task" onIonChange={handleTaskChange}></IonInput>
+                        <IonInput value={task} placeholder="Task" onIonChange={handleTaskChange} required></IonInput>
                     </IonItem>
                     <IonItem>
                         <IonTextarea value={details} placeholder="Task Details" onIonChange={handleDetailChange} rows={5}></IonTextarea>
                     </IonItem>
-                    <IonButton type="submit" expand="block">Save</IonButton>
+                    <div className="form-buttons">
+                        <IonButtons slot="end">
+                            <IonButton
+                                type="submit"
+                                fill="clear"
+                                disabled={!formValid}
+                            >
+                                Save
+                            </IonButton>
+                        </IonButtons>
+                    </div>
                 </form>
             </IonContent>
         </IonPage>

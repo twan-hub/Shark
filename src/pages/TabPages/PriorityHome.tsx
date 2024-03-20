@@ -1,4 +1,4 @@
-// Home.tsx or PriorityHome.tsx
+
 import React, { useEffect, useState } from 'react';
 import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
 import { add, logOut, star } from 'ionicons/icons';
@@ -17,7 +17,7 @@ interface Task {
 
 interface HomeProps {
   userId?: number;
-  onLogout: () => void; // Callback function for logout
+  onLogout: () => void;
 }
 
 const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
@@ -36,7 +36,7 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*' // Allow requests from any origin
+        'Access-Control-Allow-Origin': '*'
       },
     })
     .then(response => {
@@ -46,7 +46,7 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
       return response.json();
     })
     .then(data => {
-      setTasks(data); // Set the tasks received from the response
+      setTasks(data);
     })
     .catch(error => {
       console.error('There was a problem with the fetch operation:', error);
@@ -58,17 +58,16 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('sessionToken'); // Remove session token from local storage
+    localStorage.removeItem('sessionToken'); 
     onLogout();
-    history.push("login"); // Call the onLogout function passed from props
+    history.push("login"); 
   };
 
   const handleDeleteTask = (id: number) => {
-    // Make the delete API call
+   
     axios.delete(`http://localhost:8080/api/task/${userId}/${id}`)
         .then(response => {
             console.log('Task deleted successfully:', response.data);
-            // Update the task list after deletion
             fetchTasks();
         })
         .catch(error => {
@@ -77,11 +76,9 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
   };
 
   const handleAddPriority = (id: number) => {
-    // Make the API call to add priority
     axios.delete(`http://localhost:8080/api/favorite/${userId}/${id}`)
         .then(response => {
             console.log('Priority added successfully:', response.data);
-            // Update the task list after adding priority
             fetchTasks();
         })
         .catch(error => {

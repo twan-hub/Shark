@@ -1,11 +1,8 @@
-// TaskView.tsx
-
 import React, { useState, useEffect } from 'react';
-import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonPage, IonTextarea, IonTitle, IonToolbar, IonBackButton } from '@ionic/react';
+import { IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonPage, IonTextarea, IonTitle, IonToolbar, IonBackButton, IonCard, IonCardContent } from '@ionic/react';
 import { chevronBack, pencilOutline } from 'ionicons/icons';
 import { useHistory, useParams } from 'react-router';
 import axios from 'axios';
-
 
 interface TaskViewProps {
     userId?: number;
@@ -40,22 +37,28 @@ const TaskView: React.FC<TaskViewProps> = ({ userId }) => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar>
+                <IonToolbar color="primary">
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="home" />
+                        <IonBackButton defaultHref="/home" />
                     </IonButtons>
                     <IonTitle className='ion-text-center'>{task}</IonTitle>
                 </IonToolbar>
             </IonHeader>
-            <IonContent fullscreen>
-                <IonItem>
-                    <IonInput color="primary" disabled={true} value={task}></IonInput>
-                </IonItem>
-                <IonItem>
-                    <IonTextarea disabled={true} value={taskDetails} rows={5}></IonTextarea>
-                </IonItem>
-                <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                    <IonFabButton onClick={handleEditButtonClick}>
+            <IonContent>
+                <IonCard>
+                    <IonCardContent>
+                        <IonItem lines="none">
+                            <IonLabel position="stacked">Task Name</IonLabel>
+                            <IonInput color="primary" disabled={true} value={task}></IonInput>
+                        </IonItem>
+                        <IonItem lines="none">
+                            <IonLabel position="stacked">Task Details</IonLabel>
+                            <IonTextarea disabled={true} value={taskDetails} rows={5}></IonTextarea>
+                        </IonItem>
+                    </IonCardContent>
+                </IonCard>
+                <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                    <IonFabButton color="secondary" onClick={handleEditButtonClick}>
                         <IonIcon icon={pencilOutline} />
                     </IonFabButton>
                 </IonFab>

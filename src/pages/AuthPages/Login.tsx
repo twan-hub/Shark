@@ -1,4 +1,4 @@
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton } from "@ionic/react";
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel, IonInput, IonButton, IonToast } from "@ionic/react";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router";
@@ -10,6 +10,7 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showToast, setShowToast] = useState(false);
   const history = useHistory();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -18,14 +19,16 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     try {
       const response = await axios.post('http://localhost:8080/api/auth/login', { username, password });
       if (response.status === 200) {
-        const userId = response.data; // Assuming userId is returned from the server
+        const userId = response.data; 
         localStorage.setItem('sessionToken', response.data.sessionToken);
         history.push("/home");
         onLogin(userId);
       } else {
+        setShowToast(true);
         console.log('Login failed:', response.statusText);
       }
     } catch (error) {
+      setShowToast(true);
       console.error('Error during login:', error);
     }
   };
@@ -68,6 +71,12 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             <IonButton expand="full" onClick={handleRegisterClick}>Register</IonButton>
           </div>
         </form>
+        <IonToast
+          isOpen={showToast}
+          onDidDismiss={() => setShowToast(false)}
+          message="Invalid username or password"
+          duration={2000}
+        />
       </IonContent>
     </IonPage>
   );

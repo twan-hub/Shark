@@ -3,16 +3,16 @@ import { IonIcon, IonItem, IonItemOptions, IonItemOption, IonItemSliding, IonLab
 import { ellipseOutline, eye } from 'ionicons/icons';
 import { useHistory } from 'react-router';
 
-interface IngredientProps {
-    name: string; // Changed 'strIngredient1' to 'name' for clarity
+interface DisplayRecipeNameProps {
+    name: string; 
 }
 
-const Ingredient: React.FC<IngredientProps> = ({ name }) => {
+const DisplayRecipeName: React.FC<DisplayRecipeNameProps> = ({ name }) => {
 
     const history = useHistory()
     const handleViewClick = () => {
         console.log('Viewing ingredient:', name);
-        history.push(`/recipes/${name}`)
+        history.push(`/recipe/${name}`)
     };
 
     return (
@@ -30,4 +30,4 @@ const Ingredient: React.FC<IngredientProps> = ({ name }) => {
     );
 };
 
-export default Ingredient;
+export default DisplayRecipeName;
