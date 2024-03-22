@@ -28,7 +28,6 @@ const Task: React.FC<TaskProps> = ({ id, name, onDelete, onAddPriority }) => {
 
     const handleAddPriorityClick = () => {
         onAddPriority(id); 
-        history.push("/priority")
     };
 
     return (

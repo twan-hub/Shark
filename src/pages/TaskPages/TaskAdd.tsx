@@ -13,7 +13,6 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonToast,
 } from '@ionic/react';
 import '../../styles/TaskAdd.css';
 import { useHistory } from 'react-router';
@@ -31,7 +30,7 @@ const TaskAdd: React.FC<TaskAddProps> = ({ userId }) => {
 
   const handleBackButtonClick = () => {
     history.goBack();
-  }
+  };
 
   const handleTaskChange = (e: CustomEvent) => {
     const value = (e.target as HTMLInputElement).value;
@@ -55,10 +54,9 @@ const TaskAdd: React.FC<TaskAddProps> = ({ userId }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     axios.post(`http://localhost:8080/api/task/${userId}/create`, {
       taskName: newTask,
-      taskDetails: newDetails
+      taskDetails: newDetails,
     })
     .then(response => {
       console.log('Task created successfully:', response.data);
@@ -122,3 +120,4 @@ const TaskAdd: React.FC<TaskAddProps> = ({ userId }) => {
 };
 
 export default TaskAdd;
+
