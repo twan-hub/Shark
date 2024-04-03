@@ -42,7 +42,7 @@ const ViewRecipes: React.FC = () => {
 }
 
   if (loading) {
-    return <IonLoading isOpen={loading} message="Loading recipes..." />;
+    return <IonLoading isOpen={loading} message="Loading Drinks..." />;
   }
 
   return (

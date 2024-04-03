@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Ingredient from '../../components/Drinks/Ingredients'; // Import the Ingredient component
 import axios from 'axios';
-import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons } from '@ionic/react';
+import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonButtons, IonLoading } from '@ionic/react';
 import { chevronBack} from 'ionicons/icons';
 import { useHistory, useLocation, useParams } from 'react-router';
 import DisplayRecipeName from '../../components/Drinks/DisplayRecipeName';
@@ -12,6 +12,7 @@ const ViewRecipes: React.FC = () => {
     const { name } = useParams<{ name: string }>();
   const [drinkNames, setDrinkNames] = useState<string[]>([]);
   const history = useHistory();
+  const [loading, setLoading] = useState<boolean>(true); 
 
   useEffect(() => {
     fetchIngredients();
@@ -23,9 +24,11 @@ const ViewRecipes: React.FC = () => {
         const { drinks } = response.data;
         const drinksNames = drinks.map((drink: any) => drink.strDrink);
         setDrinkNames(drinksNames);
+        setLoading(false); 
       })
       .catch(error => {
         console.error('Error fetching ingredients:', error);
+        setLoading(false); 
       });
   };
 
@@ -47,9 +50,13 @@ const ViewRecipes: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {drinkNames.map((ingredient: any, index: any) => (
-          <DisplayRecipeName key={index} name={ingredient} />
-        ))}
+      {loading ? (
+          <IonLoading isOpen={loading} message="Loading Recipes..." />
+        ) : (
+          drinkNames.map((ingredient: any, index: any) => (
+            <DisplayRecipeName key={index} name={ingredient} />
+          ))
+        )}
       </IonContent>
     </IonPage>
   );

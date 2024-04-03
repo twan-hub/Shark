@@ -38,11 +38,11 @@ const Registration: React.FC<RegistrationProps> = ({ onRegister }) => {
         onRegister(userId);
       } else {
         console.error('Registration failed');
-        setErrorToastMessage('Registration Failed. Try a Different Username');
+        setErrorToastMessage('Error during registration. Please try again later.2');
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      setErrorToastMessage('Error during registration. Please try again later.');
+      setErrorToastMessage("Username is already being used");
     }
   };
 

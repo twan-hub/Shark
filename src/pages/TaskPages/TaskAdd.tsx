@@ -57,6 +57,7 @@ const TaskAdd: React.FC<TaskAddProps> = ({ userId }) => {
     axios.post(`http://localhost:8080/api/task/${userId}/create`, {
       taskName: newTask,
       taskDetails: newDetails,
+      favorite:false
     })
     .then(response => {
       console.log('Task created successfully:', response.data);

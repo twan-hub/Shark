@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/react';
+import { IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar, IonButton, IonToast } from '@ionic/react';
 import { add, logOut, star } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router';
 import Task from '../../components/Task/Task';
@@ -24,6 +24,8 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
   const history = useHistory();
   const location = useLocation();
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [ToastMessage, setToastMessage] = useState('');
+
 
   useEffect(() => {
     if (location.pathname === '/priority') {
@@ -78,11 +80,13 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
   const handleAddPriority = (id: number) => {
     axios.delete(`http://localhost:8080/api/favorite/${userId}/${id}`)
         .then(response => {
-            console.log('Priority added successfully:', response.data);
+            console.log('Priority removed successfully:', response.data);
+            setToastMessage("Successfully Removed");
             fetchTasks();
         })
         .catch(error => {
             console.error('Error adding priority:', error);
+            setToastMessage("Unsuccessfully Removal");
         });
   };
 
@@ -110,6 +114,12 @@ const Home: React.FC<HomeProps> = ({ userId, onLogout }) => {
             <IonIcon icon={add} />
           </IonFabButton>
         </IonFab>
+        <IonToast
+          isOpen={!!ToastMessage}
+          onDidDismiss={() => setToastMessage('')}
+          message={ToastMessage}
+          duration={2000}
+        />
       </IonContent>
     </IonPage>
   );
